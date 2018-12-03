@@ -2,6 +2,8 @@ const path = require('path');
 
 const express = require('express');
 
+const rootDir = require('../util/path');
+
 const router = express.Router();
 
 
@@ -10,7 +12,7 @@ const router = express.Router();
 // furthermore, both are implicitly reached at '/admin/add-product'
 // because they receive that argument 'filter' from app.js
 router.get('/add-product', (req, res, next) => {
-    res.sendFile(path.join(__dirname, '../', 'views', 'add-product.html'))
+    res.sendFile(path.join(rootDir, 'views', 'add-product.html'))
 });
 
 router.post('/add-product', (req, res, next) => {
