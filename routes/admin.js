@@ -6,6 +6,7 @@ const rootDir = require('../util/path');
 
 const router = express.Router();
 
+const products = [];
 
 // the following two functions can have the same path 'url'
 // since they are running different functions 'get' vs 'post'
@@ -16,8 +17,11 @@ router.get('/add-product', (req, res, next) => {
 });
 
 router.post('/add-product', (req, res, next) => {
-    console.log(req.body);
+    products.push({ title: req.body.title });
     res.redirect('/');
 });
 
-module.exports = router;
+// module.exports = router;
+
+exports.routes = router;
+exports.products = products;
