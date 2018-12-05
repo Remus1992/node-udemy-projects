@@ -2,12 +2,23 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+// have to manually require express-handlers even though it is installed
+const expressHbs = require('express-handlebars');
 
 const app = express();
 
+// now building the engine for handlebars (although name doesn't matter unless it clashes
+// with built-in functions like 'pug')
+app.engine('handlebars', expressHbs);
+
 // https://expressjs.com/en/api.html#app.set
 // see 'view engine' for info on below 
-app.set('view engine', 'pug');
+// pug is sort of built in upon installation while handlebars above
+// needs to be imported afterwards to be used
+// app.set('view engine', 'pug');
+
+app.set('view engine', 'handlebars');
+
 // let express know where to find views (although 'views' is default, if we had 'templates'
 // or something then it would replace the second 'views' below)
 app.set('views', 'views');
