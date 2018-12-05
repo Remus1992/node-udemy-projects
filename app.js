@@ -3,7 +3,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 // have to manually require express-handlers even though it is installed
-const expressHbs = require('express-handlebars');
+// const expressHbs = require('express-handlebars');
 
 const app = express();
 
@@ -12,22 +12,23 @@ const app = express();
 // to make a layout, we have to manually pass to the function where it is
 // NOTE: 'view/layouts/' is default but we put it anyway.
 // NOTE: 'hbs' can be anything we want. BUT we also have to denote in extname for layout
-app.engine(
-    'hbs',
-    expressHbs({
-        layoutsDir: "views/layouts/",
-        defaultLayout: 'main-layout',
-        extname: 'hbs'
-    })
-);
+// app.engine(
+//     'hbs',
+//     expressHbs({
+//         layoutsDir: "views/layouts/",
+//         defaultLayout: 'main-layout',
+//         extname: 'hbs'
+//     })
+// );
 
 // https://expressjs.com/en/api.html#app.set
 // see 'view engine' for info on below 
 // pug is sort of built in upon installation while handlebars above
 // needs to be imported afterwards to be used
 // app.set('view engine', 'pug');
+// app.set('view engine', 'hbs');
 
-app.set('view engine', 'hbs');
+app.set('view engine', 'ejs');
 
 // let express know where to find views (although 'views' is default, if we had 'templates'
 // or something then it would replace the second 'views' below)
