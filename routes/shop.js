@@ -18,7 +18,17 @@ router.get('/', (req, res, next) => {
 
     // render() is provided by express and will use default 
     // templating engine
-    res.render('shop', { prods : products, pageTitle: 'Shop', path: '/' });
+    res.render('shop', { 
+        prods : products, 
+        pageTitle: 'Shop', 
+        path: '/', 
+        hasProducts: products.length > 0,
+        activeShop: true,
+        productCSS: true
+     });
+    
+    // pug can do logic on the html page but handlebars can't, so we are doing that logic above and passing it along 
+    // res.render('shop', { prods : products, pageTitle: 'Shop', path: '/'});
 });
 
 module.exports = router;
