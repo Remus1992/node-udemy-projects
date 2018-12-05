@@ -27,7 +27,7 @@ app.use((req, res, next) => {
     // res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
 
     // this allows us to add dynamic content via pug (NOTE: '404.pug' is shortened)
-    res.render('404', {pageTitle: 'Page Not Found'});
+    res.status(404).render('404', {pageTitle: 'Page Not Found'});
 });
 
 app.listen(3000);

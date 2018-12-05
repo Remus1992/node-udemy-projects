@@ -16,7 +16,7 @@ router.get('/add-product', (req, res, next) => {
     //res.sendFile(path.join(rootDir, 'views', 'add-product.html'))
 
     // this allows us to add dynamic content via pug (NOTE: 'add-product.pug' is shortened)
-    res.render('add-product', {pageTitle: 'Add Product'});
+    res.render('add-product', {pageTitle: 'Add Product', path: '/admin/add-product'});
 });
 
 router.post('/add-product', (req, res, next) => {
