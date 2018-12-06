@@ -2,35 +2,18 @@ const path = require('path');
 
 const express = require('express');
 
-const rootDir = require('../util/path');
+const productsController = require('../controllers/products');
 
 const router = express.Router();
-
-const products = [];
 
 // the following two functions can have the same path 'url'
 // since they are running different functions 'get' vs 'post'
 // furthermore, both are implicitly reached at '/admin/add-product'
 // because they receive that argument 'filter' from app.js
-router.get('/add-product', (req, res, next) => {
-    //res.sendFile(path.join(rootDir, 'views', 'add-product.html'))
+router.get('/add-product', productsController.getAddProduct);
 
-    // this allows us to add dynamic content via pug (NOTE: 'add-product.pug' is shortened)
-    res.render('add-product', {
-        pageTitle: 'Add Product', 
-        path: '/admin/add-product',
-        activeAddProduct: true,
-        productCSS: true,
-        formsCSS: true
-    });
-});
-
-router.post('/add-product', (req, res, next) => {
-    products.push({ title: req.body.title });
-    res.redirect('/');
-});
+router.post('/add-product', productsController.postAddProduct);
 
 // module.exports = router;
 
-exports.routes = router;
-exports.products = products;
+module.exports = router;
