@@ -6,14 +6,10 @@ const productsController = require('../controllers/products');
 
 const router = express.Router();
 
-// the following two functions can have the same path 'url'
-// since they are running different functions 'get' vs 'post'
-// furthermore, both are implicitly reached at '/admin/add-product'
-// because they receive that argument 'filter' from app.js
+// /admin/add-product => GET
 router.get('/add-product', productsController.getAddProduct);
 
+// /admin/add-product => POST
 router.post('/add-product', productsController.postAddProduct);
-
-// module.exports = router;
 
 module.exports = router;
