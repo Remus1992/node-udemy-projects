@@ -23,11 +23,7 @@ module.exports = class Product {
   }
 
   static fetchAll() {
-    db.query('SELECT * FROM "node-complete".products');
-    // console.log(db.query('SELECT * FROM "node-complete".products'))
-    // db.query('SELECT * FROM "node-complete".products')
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log(err))
+    return db.query('SELECT * FROM "node-complete".products');
   }
 
   static findById(id) {

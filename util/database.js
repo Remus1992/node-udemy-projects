@@ -7,7 +7,7 @@ const pool = new Pool({
     password: 'PostGres1234'
 })
 
-module.exports = pool
+module.exports = pool.connect()
 
 // pool.query('SELECT * FROM "node-complete".products')
 //   .then(res => console.log(res))
@@ -26,6 +26,7 @@ const client = new Client({
 })
 
 // client.connect()
+// module.exports = client.connect()
 
 // client.query('SELECT NOW()', (err, res) => {
 //     console.log(err, res)
