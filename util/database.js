@@ -1,11 +1,29 @@
 const { Pool, Client } = require('pg')
 
-// const client = new Client({
-//     host: 'localhost',
-//     user: 'postgres',
-//     database: 'postgres',
-//     password: 'PostGres1234'
+const pool = new Pool({
+    host: 'localhost',
+    user: 'postgres',
+    database: 'postgres',
+    password: 'PostGres1234'
+})
+
+module.exports = pool
+
+// pool.query('SELECT * FROM "node-complete".products')
+//   .then(res => console.log(res))
+//   .catch(err => console.log(err))
+
+// pool.query('SELECT * FROM "node-complete".products', (err, res) => {
+//     console.log(err, res)
+//     pool.end()
 // })
+
+const client = new Client({
+    host: 'localhost',
+    user: 'postgres',
+    database: 'postgres',
+    password: 'PostGres1234'
+})
 
 // client.connect()
 
@@ -14,14 +32,4 @@ const { Pool, Client } = require('pg')
 //     client.end()
 // })
 
-const pool = new Pool({
-    host: 'localhost',
-    user: 'postgres',
-    database: 'postgres',
-    password: 'PostGres1234'
-})
 
-pool.query('SELECT * FROM "node-complete".products', (err, res) => {
-    console.log(err, res)
-    pool.end()
-})

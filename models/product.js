@@ -1,4 +1,9 @@
+const db = require('../util/database');
 const Cart = require('./cart');
+
+// db.query('SELECT * FROM "node-complete".products')
+//   .then(res => console.log(res))
+//   .catch(err => console.log(err))
 
 module.exports = class Product {
   constructor(id, title, imageUrl, price, description) {
@@ -18,10 +23,14 @@ module.exports = class Product {
   }
 
   static fetchAll() {
-    
+    db.query('SELECT * FROM "node-complete".products');
+    // console.log(db.query('SELECT * FROM "node-complete".products'))
+    // db.query('SELECT * FROM "node-complete".products')
+    //   .then(res => console.log(res))
+    //   .catch(err => console.log(err))
   }
 
   static findById(id) {
-    
+
   }
 };
