@@ -16,7 +16,7 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 // NOT SURE IF THIS IS POSTGRES COMPATIBLE 
-pg.execute('SELECT * FROM products');
+// pg.execute('SELECT * FROM products');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
