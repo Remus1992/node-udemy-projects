@@ -22,18 +22,20 @@ exports.getProduct = (req, res, next) => {
   });
 };
 
-exports.getIndex = (req, res, next) => {
-  console.log(Product.fetchAll())
-  Product.fetchAll()
-    .then(([rows, fieldData]) => {
-      res.render('shop/index', {
-        prods: rows,
-        pageTitle: 'Shop',
-        path: '/',
-      });
-    })
-    .catch(err => console.log(err));
+exports.getIndex = async (req, res, next) => {
+  try {
+    const results = await Product.fetchAll()
+    // console.log(results)
 
+    res.render('shop/index', {
+      prods: results['rows'],
+      pageTitle: 'Shop',
+      path: '/',
+    });
+
+  } catch (err) {
+    console.log(err)
+  }
 };
 
 exports.getCart = (req, res, next) => {

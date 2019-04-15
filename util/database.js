@@ -8,6 +8,16 @@ const pool = new Pool({
 })
 
 module.exports = pool.connect()
+// pool.connect()
+//     .then(client => {
+//         return client.query('SELECT * FROM "node-complete".products')
+//             .then(res => {
+//                 console.log(res)
+//             })
+//             .catch(err => {
+//                 console.log(err)
+//             })
+//     })
 
 // pool.query('SELECT * FROM "node-complete".products')
 //   .then(res => console.log(res))
