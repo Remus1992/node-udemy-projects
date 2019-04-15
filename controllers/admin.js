@@ -8,14 +8,18 @@ exports.getAddProduct = (req, res, next) => {
   });
 };
 
-exports.postAddProduct = (req, res, next) => {
+exports.postAddProduct = async (req, res, next) => {
   const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
+  const image_url = req.body.image_url;
   const price = req.body.price;
   const description = req.body.description;
-  const product = new Product(null, title, imageUrl, price, description);
-  product.save();
-  res.redirect('/');
+  try {
+    const product = await new Product(null, title, image_url, price, description);
+    await product.save();
+    res.redirect('/');
+  } catch (err) {
+    console.log(err)
+  }
 };
 
 exports.getEditProduct = (req, res, next) => {
@@ -40,18 +44,18 @@ exports.getEditProduct = (req, res, next) => {
 exports.postEditProduct = (req, res, next) => {
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
-  const updatedImageUrl = req.body.imageUrl;
+  const updatedImageUrl = req.body.image_url;
   const updatedPrice = req.body.price;
   const updatedDesc = req.body.description;
   const updatedProduct = new Product(
-    prodId, 
-    updatedTitle, 
-    updatedImageUrl, 
-    updatedPrice, 
+    prodId,
+    updatedTitle,
+    updatedImageUrl,
+    updatedPrice,
     updatedDesc
-    );
-    updatedProduct.save();
-    res.redirect('/admin/products');
+  );
+  updatedProduct.save();
+  res.redirect('/admin/products');
 };
 
 exports.getProducts = (req, res, next) => {

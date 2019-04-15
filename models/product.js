@@ -2,16 +2,20 @@ const db = require('../util/database');
 const Cart = require('./cart');
 
 module.exports = class Product {
-  constructor(id, title, imageUrl, price, description) {
+  constructor(id, title, image_url, price, description) {
     this.id = id;
     this.title = title;
-    this.imageUrl = imageUrl;
+    this.image_url = image_url;
     this.price = price;
     this.description = description;
   }
 
-  save() {
-
+  async save() {
+    const dataBase = await db
+    return dataBase.query(
+      'INSERT INTO "node-complete".products (title, price, image_url, description) VALUES ($1, $2, $3, $4)',
+      [this.title, this.price, this.image_url, this.description]
+    );
   }
 
   static deleteById(id) {
@@ -19,11 +23,12 @@ module.exports = class Product {
   }
 
   static async fetchAll() {
-    const client = await db
-    return client.query('SELECT * FROM "node-complete".products')
+    const dataBase = await db
+    return dataBase.query('SELECT * FROM "node-complete".products')
   }
 
-  static findById(id) {
-
+  static async findById(id) {
+    const dataBase = await db
+    return dataBase.query('SELECT * FROM "node-complete".products WHERE products.id = $1', [id])
   }
 };
