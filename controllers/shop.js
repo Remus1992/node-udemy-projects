@@ -1,14 +1,20 @@
 const Product = require('../models/product');
 const Cart = require('../models/cart');
 
-exports.getProducts = (req, res, next) => {
-  Product.fetchAll(products => {
+exports.getProducts = async (req, res, next) => {
+  try {
+    const results = await Product.fetchAll()
+    // console.log(results)
+
     res.render('shop/product-list', {
-      prods: products,
+      prods: results['rows'],
       pageTitle: 'All Products',
       path: '/products',
     });
-  });
+
+  } catch (err) {
+    console.log(err)
+  }
 };
 
 exports.getProduct = (req, res, next) => {
