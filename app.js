@@ -39,6 +39,7 @@ app.use(errorController.get404);
 // Associations & Relationships
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
+User.hasOne(Cart);
 Cart.belongsTo(User);
 // For Many-to-Many relationships to work, an intermediate table that connects them
 // This is where the cart-item comes into play
@@ -70,6 +71,9 @@ sequelize
     })
     .then(user => {
         // console.log(user);
+        return user.createCart();
+    })
+    .then(cart => {
         app.listen(3000);
     })
     .catch(err => {
