@@ -8,6 +8,8 @@ const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
 const Product = require('./models/product');
 const User = require('./models/user');
+const Cart = require('./models/cart');
+const CartItem = require('./models/cart-item');
 
 const app = express();
 
@@ -20,25 +22,39 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => {
+    User.findByPk(1)
+        .then(user => {
+            req.user = user;
+            next();
+        })
+        .catch(err => console.log(err));
+});
+
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 app.use(errorController.get404);
 
 // Associations & Relationships
-Product.belongsTo(User, {constraints: true, onDelete: 'CASCADE'});
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
+Cart.belongsTo(User);
+// For Many-to-Many relationships to work, an intermediate table that connects them
+// This is where the cart-item comes into play
+Cart.belongsToMany(Product, { through: CartItem});
+Product.belongsToMany(Cart, { through: CartItem});
 
 sequelize
     // this will overwrite tables and isn't always wanted as it will delete previous information
-    // .sync({ force: true })
-    .sync()
+    .sync({ force: true })
+    // .sync()
     .then(result => {
-        return User.findById(1)
+        return User.findByPk(1)
         // console.log(result);
     })
     .then(user => {
-        if(!user) {
+        if (!user) {
             return User.create({
                 first_name: "Remi",
                 last_name: "Hendo",
@@ -53,7 +69,7 @@ sequelize
         return user;
     })
     .then(user => {
-        console.log(user);
+        // console.log(user);
         app.listen(3000);
     })
     .catch(err => {
