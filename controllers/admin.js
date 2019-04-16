@@ -21,10 +21,12 @@ exports.postAddProduct = async (req, res, next) => {
   })
     .then(result => {
       console.log('Created Product');
+      // res.redirect('/admin/products');
     })
     .catch(err => {
       console.log(err)
     });
+  res.redirect('/admin/products');
   // old code with postgreSQL code
   // try {
   //   const product = await new Product(null, title, image_url, price, description);
@@ -70,7 +72,11 @@ exports.postEditProduct = (req, res, next) => {
       return product.save();
     })
     .then(result => {
-      console.log("updated product")
+      console.log("UPDATED PRODUCT")
+      // realistically this should be at the bottom after the catch but due to how 
+      // promises work, it will run before the product is updated which isn't the best user
+      // interaction. 
+      // res.redirect('/admin/products');
     })
     .catch(err => console.log(err))
   // const updatedProduct = new Product(
@@ -107,7 +113,16 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.deleteById(prodId);
+  Product.findByPk(prodId)
+    .then(product => {
+      return product.destroy();
+    })
+    .then(result => {
+      console.log("DESTROYED PRODUCT");
+      // res.redirect('/admin/products');
+    })
+    .catch(err => console.log(err))
+  // Product.deleteById(prodId);
   res.redirect('/admin/products');
 };
 
