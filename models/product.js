@@ -1,34 +1,31 @@
-const db = require('../util/database');
-const Cart = require('./cart');
+const Sequelize = require('sequelize');
 
-module.exports = class Product {
-  constructor(id, title, image_url, price, description) {
-    this.id = id;
-    this.title = title;
-    this.image_url = image_url;
-    this.price = price;
-    this.description = description;
-  }
+const sequelize = require('../util/database');
 
-  async save() {
-    const dataBase = await db
-    return dataBase.query(
-      'INSERT INTO "node-complete".products (title, price, image_url, description) VALUES ($1, $2, $3, $4)',
-      [this.title, this.price, this.image_url, this.description]
-    );
-  }
+const Product = sequelize.define('product', {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    },
+    // title: Sequelize.STRING,
+    title: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    price: {
+        type: Sequelize.DOUBLE,
+        allowNull: false
+    },
+    image_url: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    description: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }
+});
 
-  static deleteById(id) {
-
-  }
-
-  static async fetchAll() {
-    const dataBase = await db
-    return dataBase.query('SELECT * FROM "node-complete".products')
-  }
-
-  static async findById(id) {
-    const dataBase = await db
-    return dataBase.query('SELECT * FROM "node-complete".products WHERE products.id = $1', [id])
-  }
-};
+module.exports = Product;
