@@ -13,13 +13,26 @@ exports.postAddProduct = async (req, res, next) => {
   const image_url = req.body.image_url;
   const price = req.body.price;
   const description = req.body.description;
-  try {
-    const product = await new Product(null, title, image_url, price, description);
-    await product.save();
-    res.redirect('/');
-  } catch (err) {
-    console.log(err)
-  }
+  Product.create({
+    title: title,
+    price: price,
+    image_url: image_url,
+    description: description
+  })
+    .then(result => {
+      console.log('Created Product');
+    })
+    .catch(err => {
+      console.log(err)
+    });
+  // old code with postgreSQL code
+  // try {
+  //   const product = await new Product(null, title, image_url, price, description);
+  //   await product.save();
+  //   res.redirect('/');
+  // } catch (err) {
+  //   console.log(err)
+  // }
 };
 
 exports.getEditProduct = (req, res, next) => {
@@ -73,3 +86,4 @@ exports.postDeleteProduct = (req, res, next) => {
   Product.deleteById(prodId);
   res.redirect('/admin/products');
 };
+

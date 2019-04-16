@@ -1,55 +1,110 @@
 const Product = require('../models/product');
 const Cart = require('../models/cart');
 
-exports.getProducts = async (req, res, next) => {
-  try {
-    const results = await Product.fetchAll()
-    console.log(results)
+exports.getProducts = (req, res, next) => {
+  // exports.getProducts = async (req, res, next) => {
+  Product.findAll()
+    .then(products => {
+      res.render('shop/product-list', {
+        prods: products,
+        pageTitle: 'All Products',
+        path: '/products',
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    })
 
-    res.render('shop/product-list', {
-      prods: results['rows'],
-      pageTitle: 'All Products',
-      path: '/products',
-    });
+  // try {
+  //   const results = await Product.fetchAll()
+  //   console.log(results)
 
-  } catch (err) {
-    console.log(err)
-  }
+  //   res.render('shop/product-list', {
+  //     prods: results['rows'],
+  //     pageTitle: 'All Products',
+  //     path: '/products',
+  //   });
+
+  // } catch (err) {
+  //   console.log(err)
+  // }
 };
 
-exports.getProduct = async (req, res, next) => {
-  try {
-    const prodId = req.params.productId;
-    const singleProduct = await Product.findById(prodId)
-    // console.log(singleProduct)
-  
-    res.render('shop/product-detail', {
-      product: singleProduct['rows'][0],
-      pageTitle: singleProduct['rows'][0].title,
-      path: '/products'
-    });
+exports.getProduct = (req, res, next) => {
+  // exports.getProduct = async (req, res, next) => {
+  const prodId = req.params.productId;
 
-  } catch (err) {
-    console.log(err)
-  }
-  
+  Product.findByPk(prodId)
+    .then(product => {
+      res.render('shop/product-detail', {
+        product: product,
+        pageTitle: product.title,
+        path: '/products'
+      });
+    })
+    .catch(err => console.log(err));
+
+  // also Sequelize but a different method
+  // Product.findAll({
+  //   where: {
+  //     id: prodId
+  //   }
+  // })
+  //   .then(products => {
+  //     res.render('shop/product-detail', {
+  //       product: products[0],
+  //       pageTitle: products[0].title,
+  //       path: '/products'
+  //     });
+  //   })
+  //   .catch(err => console.log(err));
+
+  // Old postgreSQL method
+  // try {
+  //   const prodId = req.params.productId;
+  //   const singleProduct = await Product.findById(prodId)
+  //   // console.log(singleProduct)
+
+  //   res.render('shop/product-detail', {
+  //     product: singleProduct['rows'][0],
+  //     pageTitle: singleProduct['rows'][0].title,
+  //     path: '/products'
+  //   });
+
+  // } catch (err) {
+  //   console.log(err)
+  // }
+
 
 };
 
-exports.getIndex = async (req, res, next) => {
-  try {
-    const results = await Product.fetchAll()
-    // console.log(results)
+exports.getIndex = (req, res, next) => {
+  // exports.getIndex = async (req, res, next) => {
+  Product.findAll()
+    .then(products => {
+      res.render('shop/index', {
+        prods: products,
+        pageTitle: 'Shop',
+        path: '/',
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  // Old postgreSQL code
+  // try {
+  //   const results = await Product.fetchAll()
+  //   // console.log(results)
 
-    res.render('shop/index', {
-      prods: results['rows'],
-      pageTitle: 'Shop',
-      path: '/',
-    });
+  //   res.render('shop/index', {
+  //     prods: results['rows'],
+  //     pageTitle: 'Shop',
+  //     path: '/',
+  //   });
 
-  } catch (err) {
-    console.log(err)
-  }
+  // } catch (err) {
+  //   console.log(err)
+  // }
 };
 
 exports.getCart = (req, res, next) => {
