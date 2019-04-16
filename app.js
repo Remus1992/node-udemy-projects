@@ -48,8 +48,8 @@ Product.belongsToMany(Cart, { through: CartItem});
 
 sequelize
     // this will overwrite tables and isn't always wanted as it will delete previous information
-    .sync({ force: true })
-    // .sync()
+    // .sync({ force: true })
+    .sync()
     .then(result => {
         return User.findByPk(1)
         // console.log(result);
