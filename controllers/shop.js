@@ -227,9 +227,17 @@ exports.postOrder = (req, res, next) => {
 };
 
 exports.getOrders = (req, res, next) => {
-  res.render('shop/orders', {
-    path: '/orders',
-    pageTitle: 'Orders'
-  });
+  req.user
+    // sequelize the 'product' from the Product model for us
+    .getOrders({include: ['products']})
+    .then(orders => {
+      // console.log(orders)
+      res.render('shop/orders', {
+        path: '/orders',
+        pageTitle: 'Orders',
+        orders: orders
+      });
+    })
+    .catch(err => console.log(err));
 }
 
